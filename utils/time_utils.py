@@ -2,8 +2,17 @@ from datetime import timedelta, datetime
 from django.utils.timezone import localtime
 
 
-def get_duration(entered_at: datetime) -> timedelta:
-    duration = localtime() - localtime(entered_at)
+def get_duration(
+        entered_at: datetime,
+        leaved_at: datetime = None
+    ) -> timedelta:
+
+    if leaved_at:
+        leaved_at = localtime(leaved_at)
+    else:
+        leaved_at = localtime()
+
+    duration = leaved_at - localtime(entered_at)
     return duration
 
 
