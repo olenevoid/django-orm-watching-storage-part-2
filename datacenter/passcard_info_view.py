@@ -1,19 +1,29 @@
 from datacenter.models import Passcard
 from datacenter.models import Visit
 from django.shortcuts import render
+from utils.time_utils import get_duration, format_duration, is_over_time_limit
+from project.settings import VISIT_TIME_LIMIT_IN_MINUTES as TIME_LIMIT
 
 
 def passcard_info_view(request, passcode):
-    passcard = Passcard.objects.all()[0]
+    passcard = Passcard.objects.filter(passcode=passcode).first()
     # Программируем здесь
+    visits = Visit.objects.filter(passcard=passcard).all()
+    this_passcard_visits = []
+    for visit in visits:
+        if visit.leaved_at:
+            duration = get_duration(visit.entered_at, visit.leaved_at)
+        else:
+            duration = get_duration(visit.entered_at)
 
-    this_passcard_visits = [
-        {
-            'entered_at': '11-04-2018',
-            'duration': '25:03',
-            'is_strange': False
-        },
-    ]
+        this_passcard_visit = {
+            'entered_at': visit.entered_at,
+            'duration': format_duration(duration),
+            'is_strange': is_over_time_limit(duration, TIME_LIMIT)
+        }
+
+        this_passcard_visits.append(this_passcard_visit)    
+
     context = {
         'passcard': passcard,
         'this_passcard_visits': this_passcard_visits
