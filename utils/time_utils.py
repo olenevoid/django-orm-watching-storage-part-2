@@ -21,3 +21,8 @@ def format_duration(duration: timedelta):
     total_minutes, seconds = divmod(total_seconds, 60)
     hours, minutes = divmod(total_minutes, 60)
     return f'{hours}:{minutes:02}:{seconds:02}'
+
+
+def is_over_time_limit(duration: timedelta, time_limit_in_minutes: int):
+    time_limit = timedelta(minutes=time_limit_in_minutes)
+    return duration > time_limit
