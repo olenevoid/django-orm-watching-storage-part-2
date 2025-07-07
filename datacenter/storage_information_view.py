@@ -10,6 +10,11 @@ def get_duration(entered_at: datetime) -> timedelta:
     return duration
 
 
+def format_duration(duration: timedelta):
+    total_seconds = int(duration.total_seconds())
+    total_minutes, seconds = divmod(total_seconds, 60)
+    hours, minutes = divmod(total_minutes, 60)
+    return f'{hours}:{minutes:02}:{seconds:02}'
 
 
 def storage_information_view(request):
