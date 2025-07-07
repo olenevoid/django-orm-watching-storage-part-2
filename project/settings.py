@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from os import environ
+from os import environ, getenv
 
 
 load_dotenv()
@@ -47,3 +47,5 @@ TIME_ZONE = 'Europe/Moscow'
 USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+VISIT_TIME_LIMIT_IN_MINUTES = int(getenv('VISIT_TIME_LIMIT_IN_MINUTES', '60'))
