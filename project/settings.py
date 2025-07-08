@@ -1,27 +1,26 @@
 import os
-from dotenv import load_dotenv
-from os import environ, getenv
+from environs import env
 
 
-load_dotenv()
+env.read_env()
 
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'HOST': environ['DB_HOST'],
-        'PORT': environ['DB_PORT'],
-        'NAME': environ['DB_NAME'],
-        'USER': environ['DB_USER'],
-        'PASSWORD': environ['DB_PASSWORD'],
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
     }
 }
 
 INSTALLED_APPS = ['datacenter']
 
-SECRET_KEY = environ['SECRET_KEY']
+SECRET_KEY = env('SECRET_KEY')
 
-DEBUG = True
+DEBUG = env.bool('DEBUG', True)
 
 ROOT_URLCONF = 'project.urls'
 
@@ -48,4 +47,4 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
-VISIT_TIME_LIMIT_IN_MINUTES = int(getenv('VISIT_TIME_LIMIT_IN_MINUTES', '60'))
+VISIT_TIME_LIMIT_IN_MINUTES = env.int('VISIT_TIME_LIMIT_IN_MINUTES', 60)
