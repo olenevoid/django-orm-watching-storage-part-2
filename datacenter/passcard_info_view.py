@@ -3,11 +3,12 @@ from datacenter.models import Visit
 from django.shortcuts import render
 from utils.time_utils import get_duration, format_duration, is_over_time_limit
 from project.settings import VISIT_TIME_LIMIT_IN_MINUTES as TIME_LIMIT
+from django.shortcuts import get_object_or_404
 
 
 def passcard_info_view(request, passcode):
-    passcard = Passcard.objects.filter(passcode=passcode).first()
-    # Программируем здесь
+    passcard = get_object_or_404(Passcard, passcode=passcode)
+    
     visits = Visit.objects.filter(passcard=passcard).all()
     this_passcard_visits = []
     for visit in visits:
