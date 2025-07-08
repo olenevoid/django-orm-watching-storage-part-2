@@ -14,12 +14,14 @@ def passcard_info_view(request, passcode):
     for visit in visits:
         if visit.leaved_at:
             duration = get_duration(visit.entered_at, visit.leaved_at)
+            still_inside = False
         else:
             duration = get_duration(visit.entered_at)
+            still_inside = True
 
         this_passcard_visit = {
             'entered_at': visit.entered_at,
-            'duration': format_duration(duration),
+            'duration': format_duration(duration, still_inside),
             'is_strange': is_over_time_limit(duration, TIME_LIMIT)
         }
 
