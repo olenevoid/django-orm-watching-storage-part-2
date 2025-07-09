@@ -61,7 +61,7 @@ VISIT_TIME_LIMIT_IN_MINUTES=60
 Для запуска откройте консоль, перейдите в папку со скриптом и используйте следующую команду:
 
 ```
-python main.py
+python manage.py runserver
 ```
 
 ### Цель проекта
